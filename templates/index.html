@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Directory Picker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <button id="select-directory">Select Directory</button>
+    <p id="directory-path"></p>
+
+    <script>
+        document.getElementById('select-directory').addEventListener('click', async () => {
+            console.log("Button clicked!");  // Debugging line
+
+            // Use PyWebview to open a directory picker
+            const directoryPath = await pywebview.api.open_directory_dialog();
+            console.log("Directory selected:", directoryPath);  // Debugging line
+
+            // Display the directory path
+            document.getElementById('directory-path').innerText = `Selected Directory: ${directoryPath}`;
+            
+            // Send the directory path to the Flask backend
+            const response = await fetch('/save-directory', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ path: directoryPath }),
+            });
+
+            if (response.ok) {
+                console.log('Directory path saved successfully');
+            } else {
+                console.error('Error saving directory path');
+            }
+        });
+    </script>
+</body>
+</html>
