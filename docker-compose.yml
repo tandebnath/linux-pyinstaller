@@ -1,0 +1,9 @@
+services:
+  flask-app:
+    build: .
+    volumes:
+      - ./dist:/app/dist
+    command: ["sh", "-c", "rm -rf /app/dist/* && pyinstaller app.spec && cp -r /app/dist /app/output"]
+    working_dir: /app
+    environment:
+      - PYTHONUNBUFFERED=1

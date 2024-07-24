@@ -4,15 +4,14 @@ block_cipher = None
 
 a = Analysis(
     ['app.py'],
-    pathex=['.'],
+    pathex=['/app'],
     binaries=[],
     datas=[
-        ('templates', 'templates')  # Include the templates directory
+        ('templates', 'templates'),
     ],
     hiddenimports=[
-        'flask',  # Ensure Flask is included
-        'webview',  # Ensure PyWebview is included
-        'api'  # Ensure your custom API module is included
+        'flask',
+        'webview',
     ],
     hookspath=[],
     runtime_hooks=[],
@@ -39,7 +38,7 @@ exe = EXE(
     upx=True,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=True  # Set to False if you do not want a console window
+    console=True
 )
 
 coll = COLLECT(
